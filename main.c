@@ -115,8 +115,11 @@ int main() {
 
   }
   // 이후 recordsCount를 통해 기록 개수 파악 후 출력
-  printf("There are %d records.\n\n", recordsCount());
-  retrieveRecords();
+  int count = recordsCount();
+  printf("There are %d records.\n\n", count);
+  gameResult *results = malloc(sizeof(gameResult) * count);
+  retrieveRecords(results, count);
+  showRecords(results, count);
 
 
 
