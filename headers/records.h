@@ -9,8 +9,8 @@
 void getPlayerNames();
 void saveRecords();
 int  recordsCount();
-void retrieveRecords();
-void showRecords();
+void retrieveRecords(gameResult*, int);
+void showRecords(gameResult*, int);
 
 
 #endif
