@@ -92,6 +92,8 @@ Dir getInput(char x) {
       default : return NONE;
 
       case ARROW_DETECT_2 : switch(getchar_()) {
+        default : return NONE;
+        
         case LEFT  : return LEFT_2P;
         case RIGHT : return RIGHT_2P;
       } break;
