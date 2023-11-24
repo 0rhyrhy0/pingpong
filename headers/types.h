@@ -19,5 +19,10 @@ typedef struct {
   int score;
 } player;
 
+typedef struct {
+  player p1;
+  player p2;
+} gameResult;
+
 
 #endif
