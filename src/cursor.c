@@ -9,7 +9,7 @@ char getchar_() {
 
   char c = getchar();
 
-  tcgetattr(STDIN_FILENO, &original);
+  tcsetattr(STDIN_FILENO, TCSANOW, &original);
   return c;
 }
 
