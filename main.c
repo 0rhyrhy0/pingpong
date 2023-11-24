@@ -108,22 +108,15 @@ int main() {
   puts("");
   if(x == 'y') {
     getPlayerNames();
-    printf("%s %d %s %d\n", player1.name, player1.score, player2.name, player2.score);
-    
-      // 기록를 저장
     saveRecords();
-
   }
   // 이후 recordsCount를 통해 기록 개수 파악 후 출력
   int count = recordsCount();
-  printf("There are %d records.\n\n", count);
   gameResult *results = malloc(sizeof(gameResult) * count);
   retrieveRecords(results, count);
+  
+  system("clear");
   showRecords(results, count);
 
-
-
-  moveTo(BOARD_HEIGHT+3, 1); // echo 출력 조정용
-  showcursor();
   return 0;
 }
