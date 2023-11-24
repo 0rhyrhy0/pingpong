@@ -16,7 +16,7 @@ void saveRecords() {
   FILE* fp = fopen("records.txt", "a");
   if(!fp) exit(1);
   
-  fprintf(fp, "%s %d %s %d\n", player1.name, player1.score,
+  fprintf(fp, "%s %d %s %d\n",  player1.name, player1.score,
                                 player2.name, player2.score);
   
   fclose(fp);
@@ -29,9 +29,7 @@ int recordsCount() {
   
   char buffer[256];
   int count = 0;
-  while(fgets(buffer, 256, fp)) {
-    count++;
-  }
+  while(fgets(buffer, 256, fp)) count++;
 
   fclose(fp);  
   return count;
@@ -42,17 +40,15 @@ void retrieveRecords(gameResult* list, int count) {
   FILE* fp = fopen("records.txt", "r");
   if(!fp) exit(1);
   
-  for(int i = 0; i < count; i++) {
+  for(int i = 0; i < count; i++)
     fscanf(fp, "%s %d %s %d\n", list[i].p1.name, &list[i].p1.score, list[i].p2.name, &list[i].p2.score);
-  }
   
   fclose(fp);
 }
 
 // 사이즈는 임시 책정, 추후 변경 가능
 void showRecords(gameResult* list, int count) {
-  for(int i = 0; i < count; i++) {
+  for(int i = 0; i < count; i++)
     printf("%s : %d vs %d : %s\n",  list[i].p1.name,  list[i].p1.score,
                                     list[i].p2.score, list[i].p2.name);
-  }
 }
