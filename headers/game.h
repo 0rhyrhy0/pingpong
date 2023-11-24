@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "cursor.h"
+#include "types.h"
 
 // 매크로 함수
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -42,24 +43,14 @@
 #define BAR_STRETCH 3 // 바 중심으로부터 양쪽 끝까지의 거리
 #define BAR_MOVE    2 // 이동 시 바의 이동 거리
 
-// 키보드 입력값
-typedef enum {
-  NONE = 0,
-  LEFT_1P, RIGHT_1P,
-  LEFT_2P, RIGHT_2P
-} Dir;
 
-// 좌표 관련
-typedef struct {
-  int x;
-  int y;
-} Point, Vector;
 
 extern Point  ball;
 extern Vector ball_dir;
 extern int p1bar, p2bar; // 바의 x좌표
 extern int p1right, p1left, p2right, p2left; // 이동 방향
-extern int score1, score2, fps;
+extern player player1, player2;
+extern int fps;
 
 void initializeBoard();
 int  updateBoard();
