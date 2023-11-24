@@ -25,7 +25,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 
-.PHONY: run, clean, r
+.PHONY: run, clean, r, rr
 
 run : main.exe
 	@./main.exe
@@ -37,3 +37,7 @@ r :
 	make clean
 	clear
 	@make run --no-print-directory
+	
+rr :
+	@rm -rf records.txt
+	@touch records.txt
