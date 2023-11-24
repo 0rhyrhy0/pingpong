@@ -103,18 +103,21 @@ int main() {
   system("clear");
   showcursor();
   printf("Submit your scores? [y/n] ");
-  if(getchar_() == 'y') {
-    puts("");
+  char x;
+  while((x = getchar_()) != 'y' && x != 'n');
+  puts("");
+  if(x == 'y') {
     getPlayerNames();
     printf("%s %d %s %d\n", player1.name, player1.score, player2.name, player2.score);
-  
-    // 기록를 저장
-    saveRecords();
-  } else puts("");
     
+      // 기록를 저장
+    saveRecords();
+
+  }
   // 이후 recordsCount를 통해 기록 개수 파악 후 출력
   printf("There are %d records.\n\n", recordsCount());
   retrieveRecords();
+
 
 
   moveTo(BOARD_HEIGHT+3, 1); // echo 출력 조정용
