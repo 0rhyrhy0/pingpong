@@ -3,7 +3,9 @@
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t  cond  = PTHREAD_COND_INITIALIZER;
 volatile int terminate = 0;
-extern int fps; // game.c 참조
+
+// game.c
+extern int fps;
 
 void updateGame() {
   pthread_mutex_lock(&mutex);
@@ -79,26 +81,41 @@ int main() {
   char input;
   pthread_t gameLoopThread, keyboardInputThread;
 
-
   while(1) {
     initializeBoard();
-    moveTo(BOARD_HEIGHT/2 + 3, BOARD_WIDTH/2 - 3);
-    puts("PRESS @NY KEY");
-    moveTo(BOARD_HEIGHT/2 + 4, BOARD_WIDTH/2);
-    puts("TO START");
+    moveTo(BOARD_HEIGHT/2 + 3, BOARD_WIDTH/2 - 3); puts("PRESS @NY KEY");
+    moveTo(BOARD_HEIGHT/2 + 4, BOARD_WIDTH/2);     puts("TO START");
     getchar_();
 
     pthread_create(&gameLoopThread,      NULL, keyboardInputs, NULL);
     pthread_create(&keyboardInputThread, NULL, gameLoop,       NULL);
-
     pthread_join(keyboardInputThread, NULL);
     pthread_join(gameLoopThread,      NULL);
 
     while( (input = getchar_()) != 'q' && input != 'r' ); // q, r 입력 대기
     terminate = 0;
     if(input == 'q') break;
-    if(input == 'r') continue;
   }
+  
+  /* 이 밑으로 엔드카드 */
+  
+  // 기록을 저장할지 물어봄
+  system("clear");
+  showcursor();
+  printf("Submit your scores? [y/n] ");
+  if(getchar_() == 'y') {
+    puts("");
+    getPlayerNames();
+    printf("%s %d %s %d\n", player1.name, player1.score, player2.name, player2.score);
+  
+    // 기록를 저장
+    saveRecords();
+  } else puts("");
+    
+  // 이후 recordsCount를 통해 기록 개수 파악 후 출력
+  printf("There are %d records.\n\n", recordsCount());
+  retrieveRecords();
+
 
   moveTo(BOARD_HEIGHT+3, 1); // echo 출력 조정용
   showcursor();
