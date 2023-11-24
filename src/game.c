@@ -4,7 +4,8 @@ Point ball;
 Vector ball_dir;
 int p1bar, p2bar; // 바의 x좌표
 int p1right, p1left, p2right, p2left; // 이동 방향
-int score1, score2, fps;
+player player1, player2;
+int fps;
 
 void initializeBoard() {
   ball.x = BALL_INIT_X, ball.y = BALL_INIT_Y;
@@ -13,7 +14,7 @@ void initializeBoard() {
   p2bar = BOARD_WIDTH/2+1;
   p1right = 0, p1left = 0;
   p2right = 0, p2left = 0;
-  score1  = 0, score2 = 0;
+  player1.score  = 0, player2.score = 0;
   // fps : 매번 계산
   system("clear");
 
@@ -47,9 +48,9 @@ int updateBoard() {
   // 공이 바에 튕기는 상황 구현
   int nextX = ball.x + ball_dir.x;
   if(ball.y == 1 && (nextX >= p1bar - BAR_STRETCH && nextX <= p1bar + BAR_STRETCH))
-    ball_dir.y *= -1, score1++;
+    ball_dir.y *= -1, player1.score++;
   else if(ball.y == BOARD_HEIGHT-2 && (nextX >= p2bar - BAR_STRETCH && nextX <= p2bar + BAR_STRETCH))
-    ball_dir.y *= -1, score2++;
+    ball_dir.y *= -1, player2.score++;
 
   // 상태 계산
   ball.x += ball_dir.x;
@@ -69,9 +70,9 @@ int updateBoard() {
     }
   }
 
-  fps = 4 + ((score1 + score2)/10);
+  fps = 4 + ((player1.score + player2.score)/10);
   moveTo(3, BOARD_WIDTH + 8); puts("SCORE");
-  moveTo(4, BOARD_WIDTH + 7); printf("%2d : %d", score1, score2);
+  moveTo(4, BOARD_WIDTH + 7); printf("%2d : %d", player1.score, player2.score);
   moveTo(6, BOARD_WIDTH + 7); printf("FPS : %d", fps);
   moveTo(8, BOARD_WIDTH + 5); puts("FPS += 1 per 10 points");
 
