@@ -38,18 +38,21 @@ int recordsCount() {
 }
 
 // 기록들을 malloc 한 배열을 통해 읽어옴
-void retrieveRecords() {
+void retrieveRecords(gameResult* list, int count) {
   FILE* fp = fopen("records.txt", "r");
   if(!fp) exit(1);
   
-  char line[100];
-  for(int i = 0; i < recordsCount(); i++) {
-    fgets(line, 100, fp);
-    printf("%s", line);
+  for(int i = 0; i < count; i++) {
+    fscanf(fp, "%s %d %s %d\n", list[i].p1.name, &list[i].p1.score, list[i].p2.name, &list[i].p2.score);
   }
   
   fclose(fp);
 }
 
 // 사이즈는 임시 책정, 추후 변경 가능
-void showRecords() {}
+void showRecords(gameResult* list, int count) {
+  for(int i = 0; i < count; i++) {
+    printf("%s : %d vs %d : %s\n",  list[i].p1.name,  list[i].p1.score,
+                                    list[i].p2.score, list[i].p2.name);
+  }
+}
