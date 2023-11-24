@@ -1,5 +1,7 @@
 #include "../headers/records.h"
 
+// records.txt는 main.c와 같은 디렉토리에 있으므로 ../ 가 있으면 안된다
+
 // game.c
 extern player player1, player2;
 
