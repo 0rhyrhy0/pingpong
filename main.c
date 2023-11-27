@@ -102,6 +102,7 @@ int main() {
   // 기록을 저장할지 물어봄
   system("clear");
   showcursor();
+  signal(SIGINT, SIG_IGN);
   printf("Submit your scores? [y/n] ");
   char x;
   while((x = getchar_()) != 'y' && x != 'n');
@@ -110,6 +111,7 @@ int main() {
     getPlayerNames();
     saveRecords();
   }
+  signal(SIGINT, SIG_DFL);
   
   // 이후 recordsCount를 통해 기록 개수 파악 후 출력
   int count = recordsCount();
