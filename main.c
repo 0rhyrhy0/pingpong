@@ -92,14 +92,14 @@ int main() {
     pthread_join(keyboardInputThread, NULL);
     pthread_join(gameLoopThread,      NULL);
 
-    while( (input = getchar_()) != 'q' && input != 'r' ); // q, r ÀÔ·Â ´ë±â
+    while( (input = getchar_()) != 'q' && input != 'r' ); // q, r ì…ë ¥ ëŒ€ê¸°
     terminate = 0;
     if(input == 'q') break;
   }
   
-  /* ÀÌ ¹ØÀ¸·Î ¿£µåÄ«µå */
+  /* ì´ ë°‘ìœ¼ë¡œ ì—”ë“œì¹´ë“œ */
   
-  // ±â·ÏÀ» ÀúÀåÇÒÁö ¹°¾îº½
+  // ê¸°ë¡ì„ ì €ì¥í• ì§€ ë¬¼ì–´ë´„
   system("clear");
   showcursor();
   printf("Submit your scores? [y/n] ");
@@ -111,7 +111,7 @@ int main() {
     saveRecords();
   }
   
-  // ÀÌÈÄ recordsCount¸¦ ÅëÇØ ±â·Ï °³¼ö ÆÄ¾Ç ÈÄ Ãâ·Â
+  // ì´í›„ recordsCountë¥¼ í†µí•´ ê¸°ë¡ ê°œìˆ˜ íŒŒì•… í›„ ì¶œë ¥
   int count = recordsCount();
   gameResult *results = malloc(sizeof(gameResult) * count);
   if(count) {

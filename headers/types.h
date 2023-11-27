@@ -1,14 +1,14 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-// Å°º¸µå ÀÔ·Â°ª
+// í‚¤ë³´ë“œ ìž…ë ¥ê°’
 typedef enum {
   NONE = 0,
   LEFT_1P, RIGHT_1P,
   LEFT_2P, RIGHT_2P
 } Dir;
 
-// ÁÂÇ¥ °ü·Ã
+// ì¢Œí‘œ ê´€ë ¨
 typedef struct {
   int x;
   int y;

@@ -1,6 +1,6 @@
 #include "../headers/records.h"
 
-// records.txt´Â main.c¿Í °°Àº µğ·ºÅä¸®¿¡ ÀÖÀ¸¹Ç·Î ../ °¡ ÀÖÀ¸¸é ¾ÈµÈ´Ù
+// records.txtëŠ” main.cì™€ ê°™ì€ ë””ë ‰í† ë¦¬ì— ìˆìœ¼ë¯€ë¡œ ../ ê°€ ìˆìœ¼ë©´ ì•ˆëœë‹¤
 
 // game.c
 extern player player1, player2;
@@ -22,7 +22,7 @@ void saveRecords() {
   fclose(fp);
 }
 
-// ¸î °³ÀÇ ±â·ÏÀÌ ÀÖ´ÂÁö È®ÀÎ
+// ëª‡ ê°œì˜ ê¸°ë¡ì´ ìˆëŠ”ì§€ í™•ì¸
 int recordsCount() {
   FILE* fp = fopen("records.txt", "r");
   if(!fp) exit(1);
@@ -35,7 +35,7 @@ int recordsCount() {
   return count;
 }
 
-// ±â·ÏµéÀ» malloc ÇÑ ¹è¿­À» ÅëÇØ ÀĞ¾î¿È
+// ê¸°ë¡ë“¤ì„ malloc í•œ ë°°ì—´ì„ í†µí•´ ì½ì–´ì˜´
 void retrieveRecords(gameResult* list, int count) {
   FILE* fp = fopen("records.txt", "r");
   if(!fp) exit(1);
@@ -46,7 +46,7 @@ void retrieveRecords(gameResult* list, int count) {
   fclose(fp);
 }
 
-// »çÀÌÁî´Â ÀÓ½Ã Ã¥Á¤, ÃßÈÄ º¯°æ °¡´É
+// ì‚¬ì´ì¦ˆëŠ” ì„ì‹œ ì±…ì •, ì¶”í›„ ë³€ê²½ ê°€ëŠ¥
 void showRecords(gameResult* list, int count) {
   for(int i = 0; i < count; i++)
     printf("%s : %d vs %d : %s\n",  list[i].p1.name,  list[i].p1.score,
