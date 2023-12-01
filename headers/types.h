@@ -23,7 +23,7 @@ typedef enum {
   ENTER
 } Dir;
 
-// ÁÂÇ¥ °ü·Ã
+// ì¢Œí‘œ ê´€ë ¨
 typedef struct {
   int x;
   int y;

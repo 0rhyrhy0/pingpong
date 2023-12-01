@@ -2,8 +2,8 @@
 
 Point ball;
 Vector ball_dir;
-int p1bar, p2bar; // ¹ÙÀÇ xÁÂÇ¥
-int p1right, p1left, p2right, p2left; // ÀÌµ¿ ¹æÇâ
+int p1bar, p2bar; // ë°”ì˜ xì¢Œí‘œ
+int p1right, p1left, p2right, p2left; // ì´ë™ ë°©í–¥
 player player1, player2;
 int fps;
 
@@ -19,7 +19,7 @@ void initializeBoard() {
   p1right = 0, p1left = 0;
   p2right = 0, p2left = 0;
   player1.score  = 0, player2.score = 0;
-  // fps : ¸Å¹ø °è»ê
+  // fps : ë§¤ë²ˆ ê³„ì‚°
   system("clear");
 
   moveTo(1, 1);                          putchar('+');
@@ -41,30 +41,30 @@ void initializeBoard() {
   moveBar(RIGHT_1P);
 }
 
-// °ÔÀÓ Á¾·á½Ã 1 ¹ÝÈ¯
+// ê²Œìž„ ì¢…ë£Œì‹œ 1 ë°˜í™˜
 int updateBoard() {
   int gameOver = 0;
   
-  // °øÀÌ º®¿¡ Æ¨±â´Â »óÈ² °è»ê
+  // ê³µì´ ë²½ì— íŠ•ê¸°ëŠ” ìƒí™© ê³„ì‚°
   if(ball.x == 0 || ball.x == BOARD_WIDTH-1)
     ball_dir.x *= -1;
 
-  // °øÀÌ ¹Ù¿¡ Æ¨±â´Â »óÈ² ±¸Çö
+  // ê³µì´ ë°”ì— íŠ•ê¸°ëŠ” ìƒí™© êµ¬í˜„
   int nextX = ball.x + ball_dir.x;
   if(ball.y == 1 && (nextX >= p1bar - BAR_STRETCH && nextX <= p1bar + BAR_STRETCH))
     ball_dir.y *= -1, player1.score++;
   else if(ball.y == BOARD_HEIGHT-2 && (nextX >= p2bar - BAR_STRETCH && nextX <= p2bar + BAR_STRETCH))
     ball_dir.y *= -1, player2.score++;
 
-  // »óÅÂ °è»ê
+  // ìƒíƒœ ê³„ì‚°
   ball.x += ball_dir.x;
   ball.y += ball_dir.y;
 
-  // °ÔÀÓ¿À¹ö °è»ê
+  // ê²Œìž„ì˜¤ë²„ ê³„ì‚°
   if (ball.y == 0 || ball.y == BOARD_HEIGHT-1) gameOver = 1;
 
-  // Çö»óÅÂ Ãâ·Â
-  for(int i = 1; i <= BOARD_HEIGHT-2; i++) { // ¹Ù Ãâ·ÂÀº µû·Î Ã³¸®
+  // í˜„ìƒíƒœ ì¶œë ¥
+  for(int i = 1; i <= BOARD_HEIGHT-2; i++) { // ë°” ì¶œë ¥ì€ ë”°ë¡œ ì²˜ë¦¬
     for(int j = 0; j < BOARD_WIDTH; j++) {
       moveTo(i+2, j+2);
       if(i == ball.y && j == ball.x)
@@ -85,7 +85,7 @@ int updateBoard() {
   return 0;
 }
 
-// wasd 1P, ¹æÇâÅ° 2P
+// wasd 1P, ë°©í–¥í‚¤ 2P
 Dir getInput(char x) {
   switch(x) {
     default   : return NONE;
@@ -135,7 +135,7 @@ void moveBar(Dir d) {
     case UP_1P : case DOWN_1P :
     case UP_2P : case DOWN_2P : return;
   }
-  // º¸µå ÃÖ»ó´Ü, ÃÖÇÏ´Ü ÁÙ Ãâ·Â
+  // ë³´ë“œ ìµœìƒë‹¨, ìµœí•˜ë‹¨ ì¤„ ì¶œë ¥
   for(int x=1 ; x <= BOARD_WIDTH ; x++) {
     moveTo(2, x+1);
     putchar(BLANK);

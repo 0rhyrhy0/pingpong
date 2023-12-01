@@ -5,11 +5,12 @@ int notmain() {
 
   gameStart();
   
-  /* ÀÌ ¹ØÀ¸·Î ¿£µåÄ«µå */
+  /* ì´ ë°‘ìœ¼ë¡œ ì—”ë“œì¹´ë“œ */
   
-  // ±â·ÏÀ» ÀúÀåÇÒÁö ¹°¾îº½
+  // ê¸°ë¡ì„ ì €ì¥í• ì§€ ë¬¼ì–´ë´„
   system("clear");
   showcursor();
+  signal(SIGINT, SIG_IGN);
   printf("Submit your scores? [y/n] ");
   char x;
   while((x = getchar_()) != 'y' && x != 'n');
@@ -18,8 +19,9 @@ int notmain() {
     getPlayerNames();
     saveRecords();
   }
+  signal(SIGINT, SIG_DFL);
   
-  // ÀÌÈÄ recordsCount¸¦ ÅëÇØ ±â·Ï °³¼ö ÆÄ¾Ç ÈÄ Ãâ·Â
+  // ì´í›„ recordsCountë¥¼ í†µí•´ ê¸°ë¡ ê°œìˆ˜ íŒŒì•… í›„ ì¶œë ¥
   int count = recordsCount();
   gameResult *results = malloc(sizeof(gameResult) * count);
   if(count) {

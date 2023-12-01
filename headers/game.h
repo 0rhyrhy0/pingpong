@@ -11,7 +11,7 @@
 
 #define NANOSECONDS_PER_SECOND 1000000000L
 
-// °ÔÀÓº¸µå »çÀÌÁî
+// ê²Œì„ë³´ë“œ ì‚¬ì´ì¦ˆ
 #define BOARD_WIDTH  34
 #define BOARD_HEIGHT 11
 
@@ -22,25 +22,25 @@
 #define BAR_LEFT  '<'
 #define BAR_RIGHT '>'
 
-#define P1COLOR "\033[1;31m" // »¡°­ & À§ÂÊ
-#define P2COLOR "\033[1;34m" // ÆÄ¶û & ¾Æ·¡ÂÊ
-#define RESET   "\033[0m"    // ÃÊ±âÈ­
+#define P1COLOR "\033[1;31m" // ë¹¨ê°• & ìœ„ìª½
+#define P2COLOR "\033[1;34m" // íŒŒë‘ & ì•„ë˜ìª½
+#define RESET   "\033[0m"    // ì´ˆê¸°í™”
 
-// °øÀÇ ÃÊ±â À§Ä¡(Áß¾Ó), ¹æÇâ(¿ìÇÏÇâ)
+// ê³µì˜ ì´ˆê¸° ìœ„ì¹˜(ì¤‘ì•™), ë°©í–¥(ìš°í•˜í–¥)
 #define BALL_INIT_X BOARD_WIDTH/2
 #define BALL_INIT_Y BOARD_HEIGHT/2
 #define BALL_INIT_DIR_X 1
 #define BALL_INIT_DIR_Y 1
 
-#define BAR_STRETCH 3 // ¹Ù Áß½ÉÀ¸·ÎºÎÅÍ ¾çÂÊ ³¡±îÁöÀÇ °Å¸®
-#define BAR_MOVE    2 // ÀÌµ¿ ½Ã ¹ÙÀÇ ÀÌµ¿ °Å¸®
+#define BAR_STRETCH 3 // ë°” ì¤‘ì‹¬ìœ¼ë¡œë¶€í„° ì–‘ìª½ ëê¹Œì§€ì˜ ê±°ë¦¬
+#define BAR_MOVE    2 // ì´ë™ ì‹œ ë°”ì˜ ì´ë™ ê±°ë¦¬
 
 
 
 extern Point  ball;
 extern Vector ball_dir;
-extern int p1bar, p2bar; // ¹ÙÀÇ xÁÂÇ¥
-extern int p1right, p1left, p2right, p2left; // ÀÌµ¿ ¹æÇâ
+extern int p1bar, p2bar; // ë°”ì˜ xì¢Œí‘œ
+extern int p1right, p1left, p2right, p2left; // ì´ë™ ë°©í–¥
 extern player player1, player2;
 extern int fps;
 
