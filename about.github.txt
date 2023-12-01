@@ -1,20 +1,26 @@
-í˜„ì¬ ë¸Œëœì¹˜ëŠ” `git status`ì—ì„œ í™•ì¸í•œë‹¤.
+ÇöÀç ºê·£Ä¡´Â `git status`¿¡¼­ È®ÀÎÇÑ´Ù.
 
-ìƒˆ ë¸Œë Œì¹˜ ë§Œë“¤ê¸° : git checkout -b <branch_name>
-ë¸Œë Œì¹˜ ì´ë™ : git checkout <branch_name>
-íŠ¹ì • ë¸Œë Œì¹˜ì— pushí•˜ëŠ” ë°©ë²• : git push -u origin <branch_name>
+»õ ºê·»Ä¡ ¸¸µé±â : git checkout -b <branch_name>
+ºê·»Ä¡ ÀÌµ¿ : git checkout <branch_name>
+Æ¯Á¤ ºê·»Ä¡¿¡ pushÇÏ´Â ¹æ¹ı : git push -u origin <branch_name>
 
-ì„ì‹œ ë¸Œëœì¹˜ ìƒì„± í›„ ì‘ì—… :
-  git checkout -b temp  - ìƒˆ ë¸Œëœì¹˜ temp ë§Œë“¤ê¸° ( ì´ë™ë„ ìë™ìœ¼ë¡œ ì´ë£¨ì–´ì§ )
-  (ì„ì‹œ ì‘ì—… ìˆ˜í–‰í•˜ê¸°)
+ÀÓ½Ã ºê·£Ä¡ »ı¼º ÈÄ ÀÛ¾÷ :
+  git checkout -b temp  - »õ ºê·£Ä¡ temp ¸¸µé±â ( ÀÌµ¿µµ ÀÚµ¿À¸·Î ÀÌ·ç¾îÁü )
+  (ÀÓ½Ã ÀÛ¾÷ ¼öÇàÇÏ±â)
   git add .
-  git commit -m "ì½”ë©˜íŠ¸"
+  git commit -m "ÄÚ¸àÆ®"
   git push origin temp
-  (ëª¨ë“  ìˆ˜ì •ì‚¬í•­ì´ tempì— ì˜¬ë°”ë¥´ê²Œ ì ìš©ë˜ì—ˆëŠ”ì§€ í™•ì¸ í›„ ì‚­ì œ)
+  (¸ğµç ¼öÁ¤»çÇ×ÀÌ temp¿¡ ¿Ã¹Ù¸£°Ô Àû¿ëµÇ¾ú´ÂÁö È®ÀÎ ÈÄ »èÁ¦)
 
-ì„ì‹œ ë¸Œëœì¹˜ ì‚­ì œí•˜ê¸° :
-  1. ì›ê²©
+ÀÓ½Ã ºê·£Ä¡ »èÁ¦ÇÏ±â :
+  1. ¿ø°İ
     git push origin --delete temp
-  2. ë¡œì»¬
-    git checkout main (tempì— ìœ„ì¹˜í•´ ìˆì„ì‹œ ì‚­ì œ ë¶ˆê°€)
+  2. ·ÎÄÃ
+    git checkout main (temp¿¡ À§Ä¡ÇØ ÀÖÀ»½Ã »èÁ¦ ºÒ°¡)
     git branch -D temp
+
+µÎ ºê·£Ä¡ A, B¸¦ A·Î ÇÕÄ¡´Â¹æ¹ı :
+  git clone <url> .
+  git checkout <A>
+  git merge -X ours <B>
+  
