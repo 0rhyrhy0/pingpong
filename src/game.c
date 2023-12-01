@@ -7,6 +7,10 @@ int p1right, p1left, p2right, p2left; // 이동 방향
 player player1, player2;
 int fps;
 
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t  cond  = PTHREAD_COND_INITIALIZER;
+volatile int terminate = 0;
+
 void initializeBoard() {
   ball.x = BALL_INIT_X, ball.y = BALL_INIT_Y;
   ball_dir.x = BALL_INIT_DIR_X, ball_dir.y = BALL_INIT_DIR_Y;
@@ -18,9 +22,9 @@ void initializeBoard() {
   // fps : 매번 계산
   system("clear");
 
-  moveTo(1, 1); putchar('+');
-  moveTo(1, BOARD_WIDTH+2); putchar('+');
-  moveTo(BOARD_HEIGHT+2, 1); putchar('+');
+  moveTo(1, 1);                          putchar('+');
+  moveTo(1, BOARD_WIDTH+2);              putchar('+');
+  moveTo(BOARD_HEIGHT+2, 1);             putchar('+');
   moveTo(BOARD_HEIGHT+2, BOARD_WIDTH+2); putchar('+');
 
   for(int i = 2; i < BOARD_WIDTH+2; i++) {
@@ -84,9 +88,12 @@ int updateBoard() {
 // wasd 1P, 방향키 2P
 Dir getInput(char x) {
   switch(x) {
-    default : return NONE;
+    default   : return NONE;
+    case '\n' : return ENTER;
 
+    case 'w' : return UP_1P;
     case 'a' : return LEFT_1P;
+    case 's' : return DOWN_1P;
     case 'd' : return RIGHT_1P;
 
     case ARROW_DETECT_1 : switch(getchar_()) {
@@ -95,6 +102,8 @@ Dir getInput(char x) {
       case ARROW_DETECT_2 : switch(getchar_()) {
         default : return NONE;
         
+        case UP    : return UP_2P;
+        case DOWN  : return DOWN_2P;
         case LEFT  : return LEFT_2P;
         case RIGHT : return RIGHT_2P;
       } break;
@@ -122,8 +131,9 @@ void moveBar(Dir d) {
       p2bar = MIN(p2bar + BAR_MOVE, BOARD_WIDTH - BAR_STRETCH - 1);
       break;
 
-    case NONE :
-      return;
+    case NONE : case ENTER : 
+    case UP_1P : case DOWN_1P :
+    case UP_2P : case DOWN_2P : return;
   }
   // 보드 최상단, 최하단 줄 출력
   for(int x=1 ; x <= BOARD_WIDTH ; x++) {
@@ -157,4 +167,97 @@ void moveBar(Dir d) {
   puts(RESET);
   
   return;
+}
+
+
+void updateGame() {
+  pthread_mutex_lock(&mutex);
+
+  if(updateBoard()) {
+    pthread_mutex_unlock(&mutex);
+    game_over();
+    return;
+  }
+
+  pthread_mutex_unlock(&mutex);
+}
+
+void *gameLoop(void*) {
+  struct timespec startTime, endTime;
+  long sleepTime;
+
+  while (!terminate) {
+    clock_gettime(CLOCK_MONOTONIC, &startTime);
+    updateGame();
+    if(terminate) break;
+    clock_gettime(CLOCK_MONOTONIC, &endTime);
+
+    sleepTime = NANOSECONDS_PER_SECOND / fps - 
+                (endTime.tv_nsec - startTime.tv_nsec + 
+                ( endTime.tv_sec - startTime.tv_sec) * NANOSECONDS_PER_SECOND);
+
+
+    if (sleepTime > 0) {
+      struct timespec ts;
+      ts.tv_sec  = sleepTime / NANOSECONDS_PER_SECOND;
+      ts.tv_nsec = sleepTime % NANOSECONDS_PER_SECOND;
+      nanosleep(&ts, NULL);
+    }
+  }
+
+  game_over();
+  return NULL;
+}
+
+void *keyboardInputs(void*) {
+  char x;
+  
+  while( !terminate && (x = getchar_() ) != 'q' ) {
+    pthread_mutex_lock(&mutex);
+    moveBar(getInput(x));
+    pthread_mutex_unlock(&mutex);
+  }
+
+  game_over();
+  return NULL;
+}
+
+void game_over() {
+  pthread_mutex_lock(&mutex);
+  terminate = 1;
+  pthread_cond_broadcast(&cond);
+  
+  moveTo(BOARD_HEIGHT/2 - 1, BOARD_WIDTH/2 - 2);
+  puts("GAME OVER");
+  
+  moveTo(BOARD_HEIGHT/2 + 1, BOARD_WIDTH/2 - 8);
+  printf("Press " P1COLOR "'r'" RESET " to " P1COLOR "R" RESET "estart");
+  
+  moveTo(BOARD_HEIGHT/2 + 2, BOARD_WIDTH/2 - 7);
+  printf("Press " P2COLOR "'q'" RESET " to " P2COLOR "Q" RESET "uit");
+  
+  pthread_mutex_unlock(&mutex);
+}
+
+
+void gameStart()
+{
+  char input;
+  pthread_t gameLoopThread, keyboardInputThread;
+  
+  while(1) {
+    initializeBoard();
+    moveTo(BOARD_HEIGHT/2 + 3, BOARD_WIDTH/2 - 3); puts("PRESS @NY KEY");
+    moveTo(BOARD_HEIGHT/2 + 4, BOARD_WIDTH/2);     puts("TO START");
+    getchar_();
+
+    pthread_create(&gameLoopThread,      NULL, keyboardInputs, NULL);
+    pthread_create(&keyboardInputThread, NULL, gameLoop,       NULL);
+    pthread_join(keyboardInputThread, NULL);
+    pthread_join(gameLoopThread,      NULL);
+
+    while( (input = getchar_()) != 'q' && input != 'r' ); // q, r 입력 대기
+    terminate = 0;
+    if(input == 'q') break;
+  }
 }

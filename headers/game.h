@@ -3,25 +3,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <time.h>
 
 #include "cursor.h"
 #include "types.h"
 
-// 매크로 함수
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define NANOSECONDS_PER_SECOND 1000000000L
 
 // 게임보드 사이즈
 #define BOARD_WIDTH  34
 #define BOARD_HEIGHT 11
-
-// 방향키 관련 상수 (UP, DOWN은 아직 사용하지 않음)
-#define ARROW_DETECT_1 27
-#define ARROW_DETECT_2 91
-// #define UP    65
-// #define DOWN  66
-#define RIGHT 67
-#define LEFT  68
 
 // 출력을 조정하기 위한 매크로
 #define BALL      '@'
@@ -52,10 +44,21 @@ extern int p1right, p1left, p2right, p2left; // 이동 방향
 extern player player1, player2;
 extern int fps;
 
+extern pthread_mutex_t mutex;
+extern pthread_cond_t cond;
+extern volatile int terminate;
+
 void initializeBoard();
 int  updateBoard();
 Dir  getInput(char);
 void moveBar(Dir);
+
+void updateGame();
+void *gameLoop(void*);
+void *keyboardInputs(void*);
+void game_over();
+
+void gameStart();
 
 
 #endif
