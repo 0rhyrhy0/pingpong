@@ -256,7 +256,7 @@ void gameStart()
     pthread_join(keyboardInputThread, NULL);
     pthread_join(gameLoopThread,      NULL);
 
-    while( (input = getchar_()) != 'q' && input != 'r' ); // q, r ÀÔ·Â ´ë±â
+    while( (input = getchar_()) != 'q' && input != 'r' ); // q, r ìž…ë ¥ ëŒ€ê¸°
     terminate = 0;
     if(input == 'q') break;
   }

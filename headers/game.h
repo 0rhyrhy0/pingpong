@@ -15,15 +15,15 @@
 #define BOARD_WIDTH  34
 #define BOARD_HEIGHT 11
 
-// ����� �����ϱ� ���� ��ũ��
+// 출력을 조정하기 위한 매크로
 #define BALL      '@'
 #define BLANK     ' '
 #define BAR       '='
 #define BAR_LEFT  '<'
 #define BAR_RIGHT '>'
 
-#define P1COLOR "\033[1;31m" // 빨강 & 위쪽
-#define P2COLOR "\033[1;34m" // 파랑 & 아래쪽
+#define P1COLOR "\033[1;31m" // 빨강 & 위
+#define P2COLOR "\033[1;34m" // 파랑 & 아래
 #define RESET   "\033[0m"    // 초기화
 
 // 공의 초기 위치(중앙), 방향(우하향)
@@ -33,7 +33,7 @@
 #define BALL_INIT_DIR_Y 1
 
 #define BAR_STRETCH 3 // 바 중심으로부터 양쪽 끝까지의 거리
-#define BAR_MOVE    2 // 이동 시 바의 이동 거리
+#define BAR_MOVE    2 // 이동 시의 바의 이동 거리
 
 
 

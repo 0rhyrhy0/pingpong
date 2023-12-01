@@ -3,11 +3,11 @@
 
 #define NANOSECONDS_PER_SECOND 1000000000L
 
-// ¸ÅÅ©·Î ÇÔ¼ö
+// ë§¤í¬ë¡œ í•¨ìˆ˜
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-// ¹æÇâÅ° °ü·Ã »ó¼ö
+// ë°©í–¥í‚¤ ê´€ë ¨ ìƒìˆ˜
 #define ARROW_DETECT_1 27
 #define ARROW_DETECT_2 91
 #define UP    65
@@ -15,7 +15,7 @@
 #define RIGHT 67
 #define LEFT  68
 
-// Å°º¸µå ÀÔ·Â°ª
+// í‚¤ë³´ë“œ ìž…ë ¥ê°’
 typedef enum {
   NONE = 0,
   LEFT_1P, RIGHT_1P, UP_1P, DOWN_1P,
