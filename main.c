@@ -36,6 +36,9 @@ int main()
 {
   hidecursor();
   displayMenu(0, 2);
+  
+  puts("\033[0m");
+  system("clear");
   showcursor();
   return 0;
 }

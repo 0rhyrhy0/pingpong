@@ -7,8 +7,8 @@ void displayMenu(int option, int color) // color : 0 ~ 3 (red , green, yellow, b
   char* arrows[] = {"  ", "->"};
   char* options[] = {"1. Game Start", "2. View Records", "3. Exit Game"};
   
-  moveTo(1, 1);
   { // ascii art title
+    moveTo(1, 1);
     puts(" ____                               ____");
     puts("/\\  _`\\   __                       /\\  _`\\");
     puts("\\ \\ \\L\\ \\/\\_\\     ___       __     \\ \\ \\L\\ \\  ___     ___       __");
@@ -30,25 +30,25 @@ void displayMenu(int option, int color) // color : 0 ~ 3 (red , green, yellow, b
   
   moveTo(18, 0);
   
-  // 방향키 입력에 따른 처리(재귀 괜찮나?)
-  switch(getInput(getchar_())) {
-    case NONE : return;
+  // 방향키 입력에 따른 처리(재귀)
+  while(1) switch(getInput(getchar_())) {
+    case NONE : break;
     
     case UP_1P : case UP_2P :
       displayMenu(MAX(option - 1, 0), color);
-      break;
+      return;
     
     case DOWN_1P : case DOWN_2P :
       displayMenu(MIN(option + 1, 2), color);
-      break;
+      return;
       
     case RIGHT_1P : case RIGHT_2P :
       displayMenu(option, (color + 1) % 4);
-      break;
+      return;
       
     case LEFT_1P : case LEFT_2P :
       displayMenu(option, (color + 3) % 4);
-      break;
+      return;
       
     case ENTER :
       printf("\033[0m");
@@ -56,12 +56,10 @@ void displayMenu(int option, int color) // color : 0 ~ 3 (red , green, yellow, b
         case 0 :
           gameStart();
           displayMenu(option, color);
-          break;
+          return;
         // case 1 : viewRecords(); break;
         // case 2 : exitGame(); break;
       }
-      break;
+      return;
   }
-  printf("\033[0m");
 }
-

@@ -1,13 +1,13 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-
+#define NANOSECONDS_PER_SECOND 1000000000L
 
 // 매크로 함수
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-// 방향키 관련 상수 (UP, DOWN은 아직 사용하지 않음)
+// 방향키 관련 상수
 #define ARROW_DETECT_1 27
 #define ARROW_DETECT_2 91
 #define UP    65
