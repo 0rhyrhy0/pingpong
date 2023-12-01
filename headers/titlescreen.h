@@ -10,5 +10,12 @@
 
 void displayMenu(int, int);
 
+// records.c
+extern void getPlayerNames();
+extern void saveRecords();
+extern int recordsCount();
+void retrieveRecords(gameResult*, int);
+void showRecords(gameResult*, int);
+
 
 #endif

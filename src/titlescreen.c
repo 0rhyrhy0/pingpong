@@ -7,26 +7,15 @@ void displayMenu(int option, int color) // color : 0 ~ 3 (red , green, yellow, b
   char* arrows[] = {"  ", "->"};
   char* options[] = {"1. Game Start", "2. View Records", "3. Exit Game"};
   
-  { // ascii art title
-    moveTo(1, 1);
-    puts(" ____                               ____");
-    puts("/\\  _`\\   __                       /\\  _`\\");
-    puts("\\ \\ \\L\\ \\/\\_\\     ___       __     \\ \\ \\L\\ \\  ___     ___       __");
-    puts(" \\ \\ ,__/\\/\\ \\   /'_ `\\   /'_ `\\    \\ \\ ,__/ / __`\\ /' _ `\\   /'_ `\\");
-    puts("  \\ \\ \\/  \\ \\ \\ /\\ \\/\\ \\ /\\ \\/\\ \\    \\ \\ \\/ /\\ \\L\\ \\/\\ \\/\\ \\ /\\ \\/\\ \\");
-    puts("   \\ \\_\\   \\ \\_\\\\ \\_\\ \\_\\\\ \\____ \\    \\ \\_\\ \\ \\____/\\ \\_\\ \\_\\\\ \\____ \\");
-    puts("    \\/_/    \\/_/ \\/_/\\/_/ \\/___L\\ \\    \\/_/  \\/___/  \\/_/\\/_/ \\/___L\\ \\");
-    puts("                            /\\____/                             /\\____/");
-    puts("                            \\_/__/                              \\_/__/");
-  }
+  ascii();
   
   moveTo(12, 3); puts(arrows[option == 0]);
   moveTo(13, 3); puts(arrows[option == 1]);
   moveTo(14, 3); puts(arrows[option == 2]);
   
-  moveTo(12, 10); printf("\033[%dm%s", 33, options[0]);
-  moveTo(13, 10); printf("\033[%dm%s", 34, options[1]);
-  moveTo(14, 10); printf("\033[%dm%s", 31, options[2]);
+  moveTo(12, 10 + 4 * (option == 0)); printf("\033[%dm%s", 33, options[0]);
+  moveTo(13, 10 + 4 * (option == 1)); printf("\033[%dm%s", 34, options[1]);
+  moveTo(14, 10 + 4 * (option == 2)); printf("\033[%dm%s", 31, options[2]);
   
   moveTo(18, 0);
   
@@ -54,10 +43,29 @@ void displayMenu(int option, int color) // color : 0 ~ 3 (red , green, yellow, b
       printf("\033[0m");
       switch(option) {
         case 0 :
+          system("clear");
+          puts(TITLECOLOR);
+          ascii();
+          showcursor(); getPlayerNames(); hidecursor(); getchar_();
           gameStart();
+          saveRecords();
+
+
           displayMenu(option, color);
           return;
-        // case 1 : viewRecords(); break;
+        case 1 :
+          int count = recordsCount();
+          if(count) {
+            gameResult *results = malloc(sizeof(gameResult) * count);
+            retrieveRecords(results, count);
+            
+            system("clear");
+            showRecords(results, count); // 수정 필요
+            getchar_();
+          }
+
+          displayMenu(option, color);
+          return;
         // case 2 : exitGame(); break;
       }
       return;

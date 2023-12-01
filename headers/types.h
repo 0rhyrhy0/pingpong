@@ -15,6 +15,11 @@
 #define RIGHT 67
 #define LEFT  68
 
+#define TITLECOLOR "\033[38;2;100;200;200m"
+#define P1COLOR    "\033[1;31m" // 빨강 & 위
+#define P2COLOR    "\033[1;34m" // 파랑 & 아래
+#define RESET      "\033[0m"    // 초기화
+
 // 키보드 입력값
 typedef enum {
   NONE = 0,
@@ -35,6 +40,7 @@ typedef struct {
 } player;
 
 typedef struct {
+  int timeinfo[5];
   player p1;
   player p2;
 } gameResult;

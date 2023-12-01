@@ -11,6 +11,20 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t  cond  = PTHREAD_COND_INITIALIZER;
 volatile int terminate = 0;
 
+void ascii()
+{ // ascii art title
+  moveTo(1, 1);
+  puts(" ____                               ____");
+  puts("/\\  _`\\   __                       /\\  _`\\");
+  puts("\\ \\ \\L\\ \\/\\_\\     ___       __     \\ \\ \\L\\ \\  ___     ___       __");
+  puts(" \\ \\ ,__/\\/\\ \\   /'_ `\\   /'_ `\\    \\ \\ ,__/ / __`\\ /' _ `\\   /'_ `\\");
+  puts("  \\ \\ \\/  \\ \\ \\ /\\ \\/\\ \\ /\\ \\/\\ \\    \\ \\ \\/ /\\ \\L\\ \\/\\ \\/\\ \\ /\\ \\/\\ \\");
+  puts("   \\ \\_\\   \\ \\_\\\\ \\_\\ \\_\\\\ \\____ \\    \\ \\_\\ \\ \\____/\\ \\_\\ \\_\\\\ \\____ \\");
+  puts("    \\/_/    \\/_/ \\/_/\\/_/ \\/___L\\ \\    \\/_/  \\/___/  \\/_/\\/_/ \\/___L\\ \\");
+  puts("                            /\\____/                             /\\____/");
+  puts("                            \\_/__/                              \\_/__/");
+}
+
 void initializeBoard() {
   ball.x = BALL_INIT_X, ball.y = BALL_INIT_Y;
   ball_dir.x = BALL_INIT_DIR_X, ball_dir.y = BALL_INIT_DIR_Y;
@@ -21,20 +35,22 @@ void initializeBoard() {
   player1.score  = 0, player2.score = 0;
   // fps : 매번 계산
   system("clear");
+  puts("\033[38;2;100;200;200m");
+  ascii();
 
-  moveTo(1, 1);                          putchar('+');
-  moveTo(1, BOARD_WIDTH+2);              putchar('+');
-  moveTo(BOARD_HEIGHT+2, 1);             putchar('+');
-  moveTo(BOARD_HEIGHT+2, BOARD_WIDTH+2); putchar('+');
+  moveTo(GAMEBOARD_Y_OFFSET + 1, 1);                          putchar('+');
+  moveTo(GAMEBOARD_Y_OFFSET + 1, BOARD_WIDTH+2);              putchar('+');
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT+2, 1);             putchar('+');
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT+2, BOARD_WIDTH+2); putchar('+');
 
   for(int i = 2; i < BOARD_WIDTH+2; i++) {
-    moveTo(1, i); putchar('-');
-    moveTo(BOARD_HEIGHT+2, i); putchar('-');
+    moveTo(GAMEBOARD_Y_OFFSET + 1, i); putchar('-');
+    moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT+2, i); putchar('-');
   }
 
   for(int i = 2; i < BOARD_HEIGHT+2; i++) {
-    moveTo(i, 1); putchar('|');
-    moveTo(i, BOARD_WIDTH+2); putchar('|');
+    moveTo(GAMEBOARD_Y_OFFSET + i, 1); putchar('|');
+    moveTo(GAMEBOARD_Y_OFFSET + i, BOARD_WIDTH+2); putchar('|');
   }
 
   updateBoard();
@@ -64,21 +80,28 @@ int updateBoard() {
   if (ball.y == 0 || ball.y == BOARD_HEIGHT-1) gameOver = 1;
 
   // 현상태 출력
+  puts("\033[38;2;190;130;240m");
   for(int i = 1; i <= BOARD_HEIGHT-2; i++) { // 바 출력은 따로 처리
     for(int j = 0; j < BOARD_WIDTH; j++) {
-      moveTo(i+2, j+2);
+      moveTo(GAMEBOARD_Y_OFFSET + i+2, j+2);
       if(i == ball.y && j == ball.x)
         putchar(BALL);
       else
         putchar(BLANK);
     }
   }
+  puts(RESET);
 
-  fps = 4 + ((player1.score + player2.score)/10);
-  moveTo(3, BOARD_WIDTH + 8); puts("SCORE");
-  moveTo(4, BOARD_WIDTH + 7); printf("%2d : %d", player1.score, player2.score);
-  moveTo(6, BOARD_WIDTH + 7); printf("FPS : %d", fps);
-  moveTo(8, BOARD_WIDTH + 5); puts("FPS += 1 per 10 points");
+  fps = 8 + ((player1.score + player2.score)/10);
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT + 3, 0); puts("SCORE");
+
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT + 3, 7); 
+  printf("%s%2d%s : %s%d%s",  P1COLOR, player1.score, RESET,
+                              P2COLOR, player2.score, RESET);
+
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT + 3, 35); printf("\033[1;33mFPS : %d\033[0m", fps);
+
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT + 3, 51); puts("\033[1;30mFPS += 1 per 10 points\033[0m");
 
   if(gameOver) return 1;
 
@@ -137,16 +160,16 @@ void moveBar(Dir d) {
   }
   // 보드 최상단, 최하단 줄 출력
   for(int x=1 ; x <= BOARD_WIDTH ; x++) {
-    moveTo(2, x+1);
+    moveTo(GAMEBOARD_Y_OFFSET + 2, x+1);
     putchar(BLANK);
     
-    moveTo(BOARD_HEIGHT+1, x+1);
+    moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT+1, x+1);
     putchar(BLANK);
   }
   
   puts(P1COLOR);
   for(int x = p1bar - BAR_STRETCH ; x <= p1bar + BAR_STRETCH; x++) {
-    moveTo(2, x+2);
+    moveTo(GAMEBOARD_Y_OFFSET + 2, x+2);
     if(x == p1bar + BAR_STRETCH)
       putchar(BAR_RIGHT);
     else if(x == p1bar - BAR_STRETCH)
@@ -156,7 +179,7 @@ void moveBar(Dir d) {
   }
   puts(P2COLOR);
   for(int x = p2bar - BAR_STRETCH ; x <= p2bar + BAR_STRETCH; x++) {
-    moveTo(BOARD_HEIGHT+1, x+2);
+    moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT+1, x+2);
     if(x == p2bar + BAR_STRETCH)
       putchar(BAR_RIGHT);
     else if(x == p2bar - BAR_STRETCH)
@@ -227,13 +250,13 @@ void game_over() {
   terminate = 1;
   pthread_cond_broadcast(&cond);
   
-  moveTo(BOARD_HEIGHT/2 - 1, BOARD_WIDTH/2 - 2);
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT/2 - 1, BOARD_WIDTH/2 - 2);
   puts("GAME OVER");
   
-  moveTo(BOARD_HEIGHT/2 + 1, BOARD_WIDTH/2 - 8);
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT/2 + 1, BOARD_WIDTH/2 - 8);
   printf("Press " P1COLOR "'r'" RESET " to " P1COLOR "R" RESET "estart");
   
-  moveTo(BOARD_HEIGHT/2 + 2, BOARD_WIDTH/2 - 7);
+  moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT/2 + 2, BOARD_WIDTH/2 - 7);
   printf("Press " P2COLOR "'q'" RESET " to " P2COLOR "Q" RESET "uit");
   
   pthread_mutex_unlock(&mutex);
@@ -247,8 +270,8 @@ void gameStart()
   
   while(1) {
     initializeBoard();
-    moveTo(BOARD_HEIGHT/2 + 3, BOARD_WIDTH/2 - 3); puts("PRESS @NY KEY");
-    moveTo(BOARD_HEIGHT/2 + 4, BOARD_WIDTH/2);     puts("TO START");
+    moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT/2 + 3, BOARD_WIDTH/2 - 3); puts("PRESS @NY KEY");
+    moveTo(GAMEBOARD_Y_OFFSET + BOARD_HEIGHT/2 + 4, BOARD_WIDTH/2);     puts("TO START");
     getchar_();
 
     pthread_create(&gameLoopThread,      NULL, keyboardInputs, NULL);
