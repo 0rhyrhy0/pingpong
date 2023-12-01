@@ -1,0 +1,20 @@
+현재 브랜치는 `git status`에서 확인한다.
+
+새 브렌치 만들기 : git checkout -b <branch_name>
+브렌치 이동 : git checkout <branch_name>
+특정 브렌치에 push하는 방법 : git push -u origin <branch_name>
+
+임시 브랜치 생성 후 작업 :
+  git checkout -b temp  - 새 브랜치 temp 만들기 ( 이동도 자동으로 이루어짐 )
+  (임시 작업 수행하기)
+  git add .
+  git commit -m "코멘트"
+  git push origin temp
+  (모든 수정사항이 temp에 올바르게 적용되었는지 확인 후 삭제)
+
+임시 브랜치 삭제하기 :
+  1. 원격
+    git push origin --delete temp
+  2. 로컬
+    git checkout main (temp에 위치해 있을시 삭제 불가)
+    git branch -D temp
